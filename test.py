@@ -72,8 +72,9 @@ def delete_note():
             req_body = request.get_json()
             is_note = Note.query.filter_by(title=req_body.get('title')).first()
             if is_note:
-                is_note.delete()
-                return "Note Successfully Deleted."pass
+                db.session.delete(is_note)
+                db.session.commit()
+                return "Note Successfully Deleted."
             return "Note not found."
         return "Method not found."
     except Exception as ex:
